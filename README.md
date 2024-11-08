@@ -1,2 +1,2 @@
 # AndroidBeadando
-Mobil Programozás I. beadandó feladat
+Mobil Programozás beadandó feladat
