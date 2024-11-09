@@ -9,6 +9,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Locale;
+
 public class SaveMeasurementActivity extends AppCompatActivity {
 
     Bundle extras;
@@ -28,10 +30,11 @@ public class SaveMeasurementActivity extends AppCompatActivity {
 
         amountTextView = findViewById(R.id.amountTextView);
         extras = getIntent().getExtras();
-        String value = "-";
+        String text = "-";
         if (extras != null) {
-            value = Float.toString(extras.getFloat("distance_cm"));
+            float value = extras.getFloat("distance_cm");
+            text = String.format(Locale.ENGLISH,"%.1f", value);
         }
-        amountTextView.setText(value);
+        amountTextView.setText(text);
     }
 }

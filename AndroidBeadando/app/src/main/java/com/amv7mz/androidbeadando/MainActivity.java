@@ -27,4 +27,8 @@ public class MainActivity extends AppCompatActivity {
     public void gotoMeasuringTape(View view) {
         startActivity(new Intent(MainActivity.this, MeasuringTapeActivity.class));
     }
+
+    public void gotoCalibrate(View view) {
+
+    }
 }

@@ -19,7 +19,7 @@
             android:id="@+id/logoPlaceholder"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:text="Measuring Tool"
+            android:text="MasterTool"
             android:textSize="36sp"
             android:textAlignment="center"
             android:gravity="center"
@@ -41,7 +41,6 @@
             android:layout_gravity="center_horizontal"
             android:text="Korábbi mérések"
             android:textSize="18sp"
-            android:onClick="gotoMeasuringTape"
             android:layout_marginVertical="10dp"
             />
 
@@ -49,8 +48,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="--placeholder--"
+            android:text="Kalibrálás"
             android:textSize="18sp"
+            android:onClick="gotoCalibrate"
             android:layout_marginVertical="10sp"
             />
 

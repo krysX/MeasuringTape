@@ -8,6 +8,8 @@ import android.hardware.SensorEventCallback;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MeasuringTapeActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -28,9 +31,13 @@ public class MeasuringTapeActivity extends AppCompatActivity implements SensorEv
     Sensor linearAccelerometer;
 
 
+    boolean isCalibrated;
+    float offsetY;
+    float accCutoff = 0.01f;
     boolean isMeasuring;
     float acc, vel, dist;
     float t0, t1, deltaT;
+    final float NANOS_IN_MILLIS = 1000_000f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,43 +55,56 @@ public class MeasuringTapeActivity extends AppCompatActivity implements SensorEv
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         linearAccelerometer = sm.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 
-        //sm.registerListener(this, linearAccelerometer, SensorManager.SENSOR_DELAY_UI);
-
-        isMeasuring = false;
+        isCalibrated = false;
     }
 
     @Override
     protected void onResume() {
-        super.onRestart();
+        super.onResume();
         acc = dist = vel = 0.0f;
-
-
+        t0 = t1 = deltaT = 0.0f;
     }
 
     public void startStopMeasurement(View view) {
+//        if (!isCalibrated) {
+//            sm
+//        }
         isMeasuring = !isMeasuring;
         if(!isMeasuring) {
+            startStop.setText("Start");
             sm.unregisterListener(this, linearAccelerometer);
             Intent i = new Intent(MeasuringTapeActivity.this, SaveMeasurementActivity.class);
-            i.putExtra("distance_cm", dist * 100.0f);
+            i.putExtra("distance_cm", Math.abs(dist * 100.0f));
             startActivity(i);
         } else {
-            sm.registerListener(this, linearAccelerometer, SensorManager.SENSOR_DELAY_UI);
-            t0 = Calendar.getInstance().getTimeInMillis();
+            sm.registerListener(this, linearAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+            t0 = SystemClock.elapsedRealtimeNanos();
             startStop.setText("Stop");
         }
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        t1 = Calendar.getInstance().getTimeInMillis();
-        deltaT = (t1 - t0) / 1000.0f;
+        if(event.sensor.getType() != Sensor.TYPE_LINEAR_ACCELERATION)
+            return;
 
-        float x = event.values[0]; float y = event.values[1]; float z = event.values[2];
-        acc = (float) Math.sqrt(x * x + y * y + z * z);
+        if(!isCalibrated) {
+            offsetY = event.values[0];
+            t0 = event.timestamp;
+            isCalibrated = true;
+            return;
+        }
 
+        t1 = (float) event.timestamp;
+        deltaT = (t1 - t0) / NANOS_IN_MILLIS / 1000.0f;
+
+        acc = event.values[0] - offsetY;
+        // Using the x-axis
+        String debugInfo = String.format(Locale.ENGLISH,"acc = %f\tvel = %f\tdist = %f\tdeltaT = %f", acc, vel, dist, deltaT);
+        Log.d("MeasuringTapeActivity", "onSensorChanged: " + debugInfo);
         vel += acc * deltaT;
         dist += vel * deltaT;
+        startStop.setText(Integer.toString((int)(dist * 100.0f)));
 
         t0 = t1;
     }
