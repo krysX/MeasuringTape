@@ -26,18 +26,18 @@ public class MeasuringTapeActivity extends AppCompatActivity implements SensorEv
 
     TextView startStop;
 
-
     SensorManager sm;
     Sensor linearAccelerometer;
 
+    final float NANOS_IN_MILLIS = 1000_000f;
+    final boolean DEBUG_MODE = true;
 
-    boolean isCalibrated;
-    float offsetY;
-    float accCutoff = 0.01f;
+    float offsetX;
+//    float accCutoff = 0.01f;
     boolean isMeasuring;
     float acc, vel, dist;
     float t0, t1, deltaT;
-    final float NANOS_IN_MILLIS = 1000_000f;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,6 @@ public class MeasuringTapeActivity extends AppCompatActivity implements SensorEv
 
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         linearAccelerometer = sm.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-
-        isCalibrated = false;
     }
 
     @Override
@@ -63,12 +61,10 @@ public class MeasuringTapeActivity extends AppCompatActivity implements SensorEv
         super.onResume();
         acc = dist = vel = 0.0f;
         t0 = t1 = deltaT = 0.0f;
+        offsetX = getSharedPreferences(CalibrateActivity.SHARED_PREF_NAME, MODE_PRIVATE).getFloat("avgNoiseValue", 0.0f);
     }
 
     public void startStopMeasurement(View view) {
-//        if (!isCalibrated) {
-//            sm
-//        }
         isMeasuring = !isMeasuring;
         if(!isMeasuring) {
             startStop.setText("Start");
@@ -88,29 +84,22 @@ public class MeasuringTapeActivity extends AppCompatActivity implements SensorEv
         if(event.sensor.getType() != Sensor.TYPE_LINEAR_ACCELERATION)
             return;
 
-        if(!isCalibrated) {
-            offsetY = event.values[0];
-            t0 = event.timestamp;
-            isCalibrated = true;
-            return;
-        }
-
         t1 = (float) event.timestamp;
         deltaT = (t1 - t0) / NANOS_IN_MILLIS / 1000.0f;
 
-        acc = event.values[0] - offsetY;
-        // Using the x-axis
+        acc = event.values[0] - offsetX;
         String debugInfo = String.format(Locale.ENGLISH,"acc = %f\tvel = %f\tdist = %f\tdeltaT = %f", acc, vel, dist, deltaT);
         Log.d("MeasuringTapeActivity", "onSensorChanged: " + debugInfo);
         vel += acc * deltaT;
         dist += vel * deltaT;
-        startStop.setText(Integer.toString((int)(dist * 100.0f)));
+
+        if(DEBUG_MODE)
+            startStop.setText(Integer.toString((int)(dist * 100.0f)));
 
         t0 = t1;
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 }
