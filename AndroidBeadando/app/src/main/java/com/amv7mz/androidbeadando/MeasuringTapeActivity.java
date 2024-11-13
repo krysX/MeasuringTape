@@ -30,7 +30,7 @@ public class MeasuringTapeActivity extends AppCompatActivity implements SensorEv
     Sensor linearAccelerometer;
 
     final float NANOS_IN_MILLIS = 1000_000f;
-    final boolean DEBUG_MODE = true;
+    final boolean DEBUG_MODE = false;
 
     float offsetX;
 //    float accCutoff = 0.01f;

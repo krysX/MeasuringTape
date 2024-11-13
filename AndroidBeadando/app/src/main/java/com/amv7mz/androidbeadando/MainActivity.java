@@ -31,4 +31,8 @@ public class MainActivity extends AppCompatActivity {
     public void gotoCalibrate(View view) {
         startActivity(new Intent(MainActivity.this, CalibrateActivity.class));
     }
+
+    public void gotoViewMeasurements(View view) {
+        startActivity(new Intent(MainActivity.this, ViewMeasurementsActivity.class));
+    }
 }

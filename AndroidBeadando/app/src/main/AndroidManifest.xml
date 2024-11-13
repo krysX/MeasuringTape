@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AndroidBeadando"
         tools:targetApi="31">
         <activity
+            android:name=".ViewMeasurementsActivity"
+            android:exported="false" />
+        <activity
             android:name=".CalibrateActivity"
             android:exported="false" />
         <activity
