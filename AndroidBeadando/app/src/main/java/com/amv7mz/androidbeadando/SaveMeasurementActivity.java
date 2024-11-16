@@ -1,8 +1,6 @@
 package com.amv7mz.androidbeadando;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,7 +12,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 public class SaveMeasurementActivity extends AppCompatActivity {
@@ -50,8 +47,6 @@ public class SaveMeasurementActivity extends AppCompatActivity {
         amountTextView.setText(text);
 
         db = new MyDatabase(this);
-//        db = openOrCreateDatabase("measurements.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-
     }
 
     @Override
@@ -62,9 +57,11 @@ public class SaveMeasurementActivity extends AppCompatActivity {
 
     public void saveMeasurement(View view) {
         String name = nameInput.getText().toString();
+        if(name.isBlank())
+            name = getString(R.string.save_activity_name_default);
         db.saveMeasurement(name, value);
 
-        Toast.makeText(this, "Mérés sikeresen elmentve!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.save_activity_toast_success), Toast.LENGTH_SHORT).show();
         startActivity(new Intent(SaveMeasurementActivity.this, MainActivity.class));
     }
 }

@@ -88,7 +88,7 @@ public class MeasuringTapeActivity extends AppCompatActivity implements SensorEv
         deltaT = (t1 - t0) / NANOS_IN_MILLIS / 1000.0f;
 
         acc = event.values[0] - offsetX;
-        String debugInfo = String.format(Locale.ENGLISH,"acc = %f\tvel = %f\tdist = %f\tdeltaT = %f", acc, vel, dist, deltaT);
+        String debugInfo = String.format(Locale.getDefault(),"acc = %f\tvel = %f\tdist = %f\tdeltaT = %f", acc, vel, dist, deltaT);
         Log.d("MeasuringTapeActivity", "onSensorChanged: " + debugInfo);
         vel += acc * deltaT;
         dist += vel * deltaT;

@@ -1,16 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Measuring Tape</string>
     <string name="main_screen_title">Measuring Tape</string>
     <string name="new_measurement">New Measurement</string>
     <string name="view_history">Measurement History</string>
     <string name="calibrate">Calibrate</string>
-    <string name="save_activity_top_text">The measured value is:</string>
-    <string name="save_activity_name_hint">your description here...</string>
     <string name="save_activity_btn">Save measurement</string>
     <string name="calibrate_info_text">"In order to make sure your measurements are accurate, calibrate the sensors here.  Put the device onto a flat horizontal surface, and leave it there for the duration of the calibration (about 10 seconds). Make sure the device does NOT move in any direction during calibration.  "</string>
     <string name="calibrate_btn_start">Start</string>
     <string name="calibrate_btn_in_progress">Calibrating...</string>
     <string name="calibrate_btn_done">Done!</string>
+    <string name="save_activity_top_text">The measured value is:</string>
+    <string name="save_activity_name_hint">your description here...</string>
     <string name="calibrate_data_title">Calibration data:</string>
     <string name="calibration_data_placeholder">Here goes the technical calibration data...</string>
     <string name="save_activity_name_default">Untitled</string>

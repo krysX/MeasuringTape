@@ -57,7 +57,7 @@ public class CalibrateActivity extends AppCompatActivity implements SensorEventL
 
         calibrateBtn = findViewById(R.id.calibrateBtn);
         calibrationDataDisplay = findViewById(R.id.calibrationDataDisplay);
-        calibrationDataDisplay.setText("Ide kerülnek a kalibrálási adatok...");
+        calibrationDataDisplay.setText(getString(R.string.calibration_data_placeholder));
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
@@ -65,7 +65,7 @@ public class CalibrateActivity extends AppCompatActivity implements SensorEventL
     public void onCalibrateStart(View v) {
         lastOscT = startT = SystemClock.elapsedRealtimeNanos();
         n_Oscillations = 0;
-        calibrateBtn.setText("Folyamatban...");
+        calibrateBtn.setText(getString(R.string.calibrate_btn_in_progress));
         calibrateBtn.setEnabled(false);
         sm.registerListener(this, linearAccelerometer, SensorManager.SENSOR_DELAY_GAME);
     }
@@ -88,7 +88,7 @@ public class CalibrateActivity extends AppCompatActivity implements SensorEventL
         sharedPreferences.edit().putFloat("avgNoiseValue", avgNoiseValue).apply();
 
         calibrationDataDisplay.setText(output);
-        calibrateBtn.setText("Kész!");
+        calibrateBtn.setText(getString(R.string.calibrate_btn_done));
     }
 
     @Override
@@ -125,6 +125,5 @@ public class CalibrateActivity extends AppCompatActivity implements SensorEventL
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // csak az interface miatt van
     }
 }

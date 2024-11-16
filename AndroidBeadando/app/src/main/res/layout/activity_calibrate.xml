@@ -11,7 +11,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kalibrálás"
+        android:text="@string/calibrate"
         android:textSize="36sp"
         tools:layout_editor_absoluteX="179dp"
         tools:layout_editor_absoluteY="33dp"
@@ -24,9 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:justificationMode="inter_word"
-        android:text="Hogy a 'mérőszalag' funkció megbízható adatokat tudjon szolgáltatni,
-szükség van a szenzorok kalibrálására. \Kalibrálás előtt helyezze a telefont az asztalra,
-a kalibrálás ideje alatt kérjük NE mozdítsa el! A kalibrálás kórülbelül 10 másodpercig tart."
+        android:text="@string/calibrate_info_text"
         android:textSize="18dp"
         android:paddingHorizontal="20dp"
         android:layout_marginVertical="20dp"
@@ -37,7 +35,7 @@ a kalibrálás ideje alatt kérjük NE mozdítsa el! A kalibrálás kórülbelü
        android:id="@+id/calibrateBtn"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:text="Kezdés"
+       android:text="@string/calibrate_btn_start"
        android:textSize="48sp"
        android:gravity="center"
        android:paddingVertical="40dp"
@@ -50,7 +48,7 @@ a kalibrálás ideje alatt kérjük NE mozdítsa el! A kalibrálás kórülbelü
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
-        android:text="Kalibrálási adatok:"
+        android:text="@string/calibrate_data_title"
         android:textSize="18sp"
         android:layout_below="@id/calibrateBtn"
         />

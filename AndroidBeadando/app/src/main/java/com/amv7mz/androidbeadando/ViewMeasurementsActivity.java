@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,25 +42,32 @@ public class ViewMeasurementsActivity extends AppCompatActivity {
             return insets;
         });
 
-        measurements = new ArrayList<String>();
+        try {
+            measurements = new ArrayList<String>();
 
-        listAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, measurements);
-        listView = findViewById(R.id.listView);
-        listView.setAdapter(listAdapter);
+            listAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, measurements);
+            listView = findViewById(R.id.listView);
+            listView.setAdapter(listAdapter);
 
-        myDatabase = new MyDatabase(this);
-        cursor = myDatabase.getCursor();
+            myDatabase = new MyDatabase(this);
+            cursor = myDatabase.getCursor();
 
-        while(!cursor.isAfterLast()) {
-            long timestamp = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME_TIMESTAMP));
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME_NAME));
-            float value = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME_VALUE));
-            Measurement m = new Measurement(timestamp, name, value);
-            measurements.add(m.toString());
-            cursor.moveToNext();
+            while(!cursor.isAfterLast()) {
+                long timestamp = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME_TIMESTAMP));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME_NAME));
+                float value = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME_VALUE));
+                Measurement m = new Measurement(timestamp, name, value);
+                measurements.add(m.toString());
+                cursor.moveToNext();
+            }
+
+//            if(!measurements.isEmpty())
+                listAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            Toast.makeText(this, R.string.view_history_empty, Toast.LENGTH_LONG);
         }
 
-        listAdapter.notifyDataSetChanged();
+
     }
 
     @Override

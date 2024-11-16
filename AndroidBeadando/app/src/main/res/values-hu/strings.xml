@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mérőszalag</string>
+    <string name="main_screen_title">Mérőszalag</string>
+    <string name="new_measurement">Új mérés</string>
+    <string name="view_history">Korábbi mérések</string>
+    <string name="calibrate">Kalibrálás</string>
+    <string name="save_activity_top_text">A mérés eredménye:</string>
+    <string name="save_activity_btn">Mérés mentése</string>
+    <string name="calibrate_info_text">"Hogy a mérések megbízhatóak legyenek, itt lehetséges a szenzorok kalibrálása. Helyezze az eszközt egy lapos, vízszintes felületre, a mérés ideje alatt az eszköz NEM mozdulhat el. A mérés ideje körülbelül  10 másodperc. "</string>
+    <string name="calibrate_btn_start">Kezdés</string>
+    <string name="calibrate_btn_in_progress">Folyamatban...</string>
+    <string name="calibrate_btn_done">Kész!</string>
+    <string name="save_activity_name_hint">mérés neve...</string>
+    <string name="calibrate_data_title">Kalibrálási adatok:</string>
+    <string name="calibration_data_placeholder">Ide kerülnek a kalibrálási adatok...</string>
+    <string name="save_activity_name_default">Névtelen</string>
+    <string name="save_activity_toast_success">Mérés sikeresen elmentve!</string>
+    <string name="view_history_empty">Nem találhatóak korábbi mérések az eszközön.</string>
+</resources>
